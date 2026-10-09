@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Feedback | Mathura Paradise</title>
+
+    <link rel="stylesheet" href="css/contact.css">
+
+</head>
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            🌸 Mathura Paradise
+        </div>
+
+        <nav>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="index.html#about">
+                About
+            </a>
+
+            <a href="index.html#history">
+                History
+            </a>
+
+            <a href="places.html">
+                Places
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+            <a href="feedback.html" class="active">
+                Feedback
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <!-- <section class="contact-hero">
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+
+            <p>
+                YOUR EXPERIENCE MATTERS
+            </p>
+
+            <h1>
+                Share Your Feedback
+            </h1>
+
+            <span>
+                Help us make Mathura Paradise more useful,
+                beautiful and informative.
+            </span>
+
+        </div>
+
+    </section> -->
+
+
+    <!-- ================= FEEDBACK ================= -->
+
+    <section class="contact-section">
+
+        <div class="contact-heading">
+
+            <p class="section-label">
+                YOUR FEEDBACK
+            </p>
+
+            <h2>
+                Tell Us What You Think
+            </h2>
+
+            <p>
+                Your feedback helps us improve the Mathura Paradise
+                experience for every visitor.
+            </p>
+
+        </div>
+
+
+        <div class="contact-container">
+
+
+            <!-- FEEDBACK INFORMATION -->
+
+            <div class="contact-info">
+
+                <h3>
+                    Help Us Improve
+                </h3>
+
+                <p>
+                    Did you enjoy exploring Mathura Paradise?
+                    Tell us what you liked and what we can improve.
+                </p>
+
+
+                <div class="info-item">
+
+                    <div class="info-icon">
+                        ⭐
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Rate Your Experience
+                        </h4>
+
+                        <p>
+                            Tell us how you found the website.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <div class="info-icon">
+                        💡
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Share Ideas
+                        </h4>
+
+                        <p>
+                            Suggest features or information.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <div class="info-icon">
+                        ❤️
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Help Us Grow
+                        </h4>
+
+                        <p>
+                            Your feedback makes the website better.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FEEDBACK FORM -->
+
+            <div class="contact-form-box">
+
+                <form id="feedbackForm">
+
+
+                    <div class="form-group">
+
+                        <label for="feedbackName">
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="feedbackName"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="rating">
+                            Rating
+                        </label>
+
+                        <select id="rating" required>
+
+                            <option value="">
+                                Select your rating
+                            </option>
+
+                            <option value="5">
+                                ⭐⭐⭐⭐⭐ Excellent
+                            </option>
+
+                            <option value="4">
+                                ⭐⭐⭐⭐ Very Good
+                            </option>
+
+                            <option value="3">
+                                ⭐⭐⭐ Good
+                            </option>
+
+                            <option value="2">
+                                ⭐⭐ Needs Improvement
+                            </option>
+
+                            <option value="1">
+                                ⭐ Poor
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="feedback">
+                            Your Feedback
+                        </label>
+
+                        <textarea
+                            id="feedback"
+                            rows="6"
+                            placeholder="Write your feedback..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <button type="submit">
+                        Submit Feedback →
+                    </button>
+
+
+                    <p
+                        id="feedbackMessage"
+                        class="form-message">
+                    </p>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="footer-logo">
+            🌸 Mathura Paradise
+        </div>
+
+        <p>
+            Discover the spiritual, historical and natural beauty
+            of Mathura and Vrindavan.
+        </p>
+
+        <div class="footer-line"></div>
+
+        <p class="copyright">
+            © 2026 Mathura Paradise. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        const feedbackForm =
+            document.getElementById("feedbackForm");
+
+        const feedbackMessage =
+            document.getElementById("feedbackMessage");
+
+
+        feedbackForm.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+                feedbackMessage.textContent =
+                    "Thank you for your valuable feedback!";
+
+                feedbackMessage.className =
+                    "form-message success";
+
+                feedbackForm.reset();
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
