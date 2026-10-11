@@ -1,570 +1,219 @@
-const placesContainer =
-    document.getElementById("placesContainer");
 
-const loading =
-    document.getElementById("loading");
+const API_URL = "https://mathura-paradise.onrender.com/api/places";
 
-const noResults =
-    document.getElementById("noResults");
-
-const resultCount =
-    document.getElementById("resultCount");
-
-const searchInput =
-    document.getElementById("search");
-
-const filterButtons =
-    document.querySelectorAll(".filter-btn");
-
+const placesContainer = document.getElementById("placesContainer");
+const loading = document.getElementById("loading");
+const noResults = document.getElementById("noResults");
+const resultCount = document.getElementById("resultCount");
+const searchInput = document.getElementById("search");
+const filterButtons = document.querySelectorAll(".filter-btn");
 
 let allPlaces = [];
-
 let currentCategory = "All";
-
 let searchText = "";
 
-
-
-/* =====================================================
-   LOAD PLACES
-===================================================== */
-
 async function loadPlaces() {
-
     try {
+        if (loading) loading.style.display = "block";
+        if (placesContainer) placesContainer.innerHTML = "";
+        if (noResults) noResults.style.display = "none";
 
-        loading.style.display = "block";
-
-        placesContainer.innerHTML = "";
-
-        const response =
-            await fetch("http://localhost:5000/api/places");
+        const response = await fetch(API_URL);
 
         if (!response.ok) {
-
-            throw new Error(
-                "Failed to load places"
-            );
-
+            throw new Error("Failed to load places");
         }
 
-        allPlaces = await response.json();
+        const result = await response.json();
+        allPlaces = Array.isArray(result) ? result : result.places || [];
 
-        loading.style.display = "none";
-
-
-        /* Get category from URL */
-
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
-
-        const category =
-            params.get("category");
-
+        const params = new URLSearchParams(window.location.search);
+        const category = params.get("category");
 
         if (category) {
-
-            const normalizedCategory =
-                normalizeCategory(category);
-
-            currentCategory =
-                normalizedCategory;
-
+            currentCategory = normalizeCategory(category);
 
             filterButtons.forEach(button => {
-
-                button.classList.remove("active");
-
-                if (
-                    normalizeCategory(
-                        button.dataset.category
-                    ) === normalizedCategory
-                ) {
-
-                    button.classList.add("active");
-
-                }
-
+                button.classList.toggle(
+                    "active",
+                    normalizeCategory(button.dataset.category) === currentCategory
+                );
             });
-
         }
 
-
         displayPlaces();
+    } catch (error) {
+        console.error("Error loading places:", error);
 
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        loading.style.display = "none";
-
-        placesContainer.innerHTML = `
-            <div class="no-results"
-                 style="display:block; grid-column:1/-1;">
-
-                <div class="no-results-icon">
-                    ⚠️
+        if (placesContainer) {
+            placesContainer.innerHTML = `
+                <div class="no-results" style="display:block; grid-column:1/-1;">
+                    <div class="no-results-icon">⚠️</div>
+                    <h3>Unable to Load Places</h3>
+                    <p>Please make sure the backend server is running on port 5000.</p>
                 </div>
-
-                <h3>
-                    Unable to Load Places
-                </h3>
-
-                <p>
-                    Please make sure the backend server
-                    is running on port 5000.
-                </p>
-
-            </div>
-        `;
-
+            `;
+        }
+    } finally {
+        if (loading) loading.style.display = "none";
     }
-
 }
-
-
-
-/* =====================================================
-   NORMALIZE CATEGORY
-===================================================== */
 
 function normalizeCategory(category) {
+    const value = (category || "").toString().trim().toLowerCase();
 
-    if (!category) {
-
-        return "";
-
-    }
-
-    const value =
-        category
-            .toString()
-            .trim()
-            .toLowerCase();
-
-
-    if (
-        value === "temple" ||
-        value === "temples"
-    ) {
-
-        return "temple";
-
-    }
-
-
-    if (
-        value === "heritage"
-    ) {
-
-        return "heritage";
-
-    }
-
-
-    if (
-        value === "nature"
-    ) {
-
-        return "nature";
-
-    }
-
-
-    if (
-        value === "all"
-    ) {
-
-        return "all";
-
-    }
-
+    if (value === "temple" || value === "temples") return "temple";
+    if (value === "heritage" || value === "heritages") return "heritage";
+    if (value === "nature") return "nature";
+    if (value === "all") return "all";
 
     return value;
-
 }
-
-
-
-/* =====================================================
-   DISPLAY PLACES
-===================================================== */
 
 function displayPlaces() {
+    let filteredPlaces = [...allPlaces];
 
-    let filteredPlaces =
-        [...allPlaces];
-
-
-    /* CATEGORY FILTER */
-
-    if (
-        currentCategory !== "All" &&
-        currentCategory !== "all"
-    ) {
-
-        filteredPlaces =
-            filteredPlaces.filter(place => {
-
-                return normalizeCategory(
-                    place.category
-                ) === normalizeCategory(
-                    currentCategory
-                );
-
-            });
-
+    if (currentCategory.toLowerCase() !== "all") {
+        filteredPlaces = filteredPlaces.filter(place =>
+            normalizeCategory(place.category) === normalizeCategory(currentCategory)
+        );
     }
 
+    const search = searchText.trim().toLowerCase();
 
-    /* SEARCH FILTER */
-
-    if (searchText.trim() !== "") {
-
-        const search =
-            searchText
-                .toLowerCase()
-                .trim();
-
-
-        filteredPlaces =
-            filteredPlaces.filter(place => {
-
-                return (
-
-                    (place.name || "")
-                        .toLowerCase()
-                        .includes(search)
-
-                    ||
-
-                    (place.description || "")
-                        .toLowerCase()
-                        .includes(search)
-
-                    ||
-
-                    (place.location || "")
-                        .toLowerCase()
-                        .includes(search)
-
-                    ||
-
-                    (place.category || "")
-                        .toLowerCase()
-                        .includes(search)
-
-                );
-
-            });
-
+    if (search) {
+        filteredPlaces = filteredPlaces.filter(place =>
+            [place.name, place.description, place.location, place.category]
+                .some(value => (value || "").toLowerCase().includes(search))
+        );
     }
 
-
-    /* RESULT COUNT */
-
-    resultCount.textContent =
-        `${filteredPlaces.length} ${
-            filteredPlaces.length === 1
-                ? "place"
-                : "places"
+    if (resultCount) {
+        resultCount.textContent = `${filteredPlaces.length} ${
+            filteredPlaces.length === 1 ? "place" : "places"
         } found`;
+    }
 
-
-    /* NO RESULTS */
+    if (!placesContainer) return;
 
     if (filteredPlaces.length === 0) {
-
         placesContainer.innerHTML = "";
-
-        noResults.style.display =
-            "block";
-
+        if (noResults) noResults.style.display = "block";
         return;
-
     }
 
+    if (noResults) noResults.style.display = "none";
 
-    noResults.style.display =
-        "none";
-
-
-    /* CREATE CARDS */
-
-    placesContainer.innerHTML =
-        filteredPlaces
-            .map(
-                place =>
-                    createPlaceCard(place)
-            )
-            .join("");
-
+    placesContainer.innerHTML = filteredPlaces
+        .map(createPlaceCard)
+        .join("");
 }
-
-
-
-/* =====================================================
-   CREATE PLACE CARD
-===================================================== */
 
 function createPlaceCard(place) {
-
-    const id =
-        place._id ||
-        place.id ||
-        "";
-
-
-    const image =
-        place.image ||
-        "../images/hero/radha-krishna.png";
-
-
-    const name =
-        place.name ||
-        "Beautiful Place";
-
-
-    const category =
-        place.category ||
-        "Destination";
-
-
-    const description =
-        place.description ||
+    const id = place._id || place.id || "";
+    const image = getImagePath(place.image);
+    const name = place.name || "Beautiful Place";
+    const category = place.category || "Destination";
+    const description = place.description ||
         "Discover this beautiful destination of Mathura and Braj.";
-
-
-    const location =
-        place.location ||
-        "Mathura";
-
+    const location = place.location || "Mathura";
 
     return `
-
         <article class="place-card">
-
-
             <div class="place-image-wrapper">
-
                 <img
-                    src="${image}"
-                    alt="${name}"
+                    src="${escapeHTML(image)}"
+                    alt="${escapeHTML(name)}"
                     class="place-image"
                     loading="lazy"
-                    onerror="this.src='../images/hero/radha-krishna.png'"
+                    onerror="this.onerror=null;this.src='../images/hero/radha-krishna.png'"
                 >
-
-
                 <span class="place-category">
-
                     ${getCategoryIcon(category)}
-
-                    ${formatCategory(category)}
-
+                    ${escapeHTML(formatCategory(category))}
                 </span>
-
             </div>
-
-
 
             <div class="place-content">
-
-
-                <h3>
-                    ${name}
-                </h3>
-
-
-                <p class="place-description">
-
-                    ${description}
-
-                </p>
-
+                <h3>${escapeHTML(name)}</h3>
+                <p class="place-description">${escapeHTML(description)}</p>
 
                 <div class="place-location">
-
-                    <span>
-                        📍
-                    </span>
-
-                    <span>
-                        ${location}
-                    </span>
-
+                    <span>📍</span>
+                    <span>${escapeHTML(location)}</span>
                 </div>
 
-
-                <a
-                    href="details.html?id=${id}"
-                    class="details-btn"
-                >
-
-                    View Details
-
-                    <span>
-                        →
-                    </span>
-
+                <a href="details.html?id=${encodeURIComponent(id)}" class="details-btn">
+                    View Details <span>→</span>
                 </a>
-
-
             </div>
-
         </article>
-
     `;
-
 }
 
+function getImagePath(image) {
+    if (!image) {
+        return "../images/hero/radha-krishna.png";
+    }
 
+    if (/^(https?:\/\/|data:|blob:)/i.test(image)) {
+        return image;
+    }
 
-/* =====================================================
-   CATEGORY ICON
-===================================================== */
+    let path = image.replace(/\\/g, "/").replace(/^\.?\//, "");
+
+    if (path.startsWith("frontend/")) {
+        path = path.slice("frontend/".length);
+    }
+
+    return path;
+}
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[character]);
+}
 
 function getCategoryIcon(category) {
+    const normalized = normalizeCategory(category);
 
-    const normalized =
-        normalizeCategory(category);
-
-
-    if (normalized === "temple") {
-
-        return "🛕";
-
-    }
-
-
-    if (normalized === "heritage") {
-
-        return "🏛️";
-
-    }
-
-
-    if (normalized === "nature") {
-
-        return "🌿";
-
-    }
-
+    if (normalized === "temple") return "🛕";
+    if (normalized === "heritage") return "🏛️";
+    if (normalized === "nature") return "🌿";
 
     return "📍";
-
 }
-
-
-
-/* =====================================================
-   FORMAT CATEGORY
-===================================================== */
 
 function formatCategory(category) {
+    const normalized = normalizeCategory(category);
 
-    if (!category) {
+    if (normalized === "temple") return "Temple";
+    if (normalized === "heritage") return "Heritage";
+    if (normalized === "nature") return "Nature";
 
-        return "Destination";
-
-    }
-
-
-    if (
-        normalizeCategory(category) ===
-        "temple"
-    ) {
-
-        return "Temple";
-
-    }
-
-
-    if (
-        normalizeCategory(category) ===
-        "heritage"
-    ) {
-
-        return "Heritage";
-
-    }
-
-
-    if (
-        normalizeCategory(category) ===
-        "nature"
-    ) {
-
-        return "Nature";
-
-    }
-
-
-    return category;
-
+    return category || "Destination";
 }
 
-
-
-/* =====================================================
-   FILTER BUTTONS
-===================================================== */
-
 filterButtons.forEach(button => {
+    button.addEventListener("click", function () {
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        this.classList.add("active");
 
-    button.addEventListener(
-        "click",
-        function () {
-
-            filterButtons.forEach(btn => {
-
-                btn.classList.remove(
-                    "active"
-                );
-
-            });
-
-
-            this.classList.add("active");
-
-
-            currentCategory =
-                this.dataset.category;
-
-
-            displayPlaces();
-
-        }
-    );
-
+        currentCategory = this.dataset.category || "All";
+        displayPlaces();
+    });
 });
 
-
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-searchInput.addEventListener(
-    "input",
-    function () {
-
-        searchText =
-            this.value;
-
+if (searchInput) {
+    searchInput.addEventListener("input", function () {
+        searchText = this.value;
         displayPlaces();
-
-    }
-);
-
-
-
-/* =====================================================
-   INITIAL LOAD
-===================================================== */
+    });
+}
 
 loadPlaces();

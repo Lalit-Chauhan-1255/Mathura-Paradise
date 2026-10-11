@@ -1,59 +1,107 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Place | Mathura Paradise</title>
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Place Details - Mathura Paradise</title>
-
-    <link rel="stylesheet"
-          href="css/style.css">
-
+    <link rel="stylesheet" href="css/details.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<header class="navbar">
+    <header class="site-header">
+        <a href="index.html" class="brand">
+            <span class="brand-icon">🌸</span>
+            <span>Mathura Paradise</span>
+        </a>
+    </header>
 
-    <div class="logo">
-        🪷
-        <span>Mathura Paradise</span>
-    </div>
-
-    <nav>
-
-        <a href="index.html">
-            Home
+    <main class="page-container">
+        <a href="places.html" class="back-link">
+            <span>←</span> Back to all places
         </a>
 
-        <a href="places.html">
-            Places
-        </a>
+        <div id="loading" class="status-card">
+            <div class="loader"></div>
+            <p>Discovering the beauty of Braj...</p>
+        </div>
 
-    </nav>
+        <div id="error-message" class="status-card error-card" hidden>
+            <div class="error-icon">!</div>
+            <h2>Place not found</h2>
+            <p>We couldn't load the details for this destination.</p>
+            <a href="places.html" class="primary-button">Explore other places →</a>
+        </div>
 
-</header>
+        <article id="place-content" hidden>
+            <section class="place-hero">
+                <img id="place-image" src="" alt="Place in Mathura and Vrindavan">
 
+                <div class="hero-shade"></div>
 
-<section class="details-container">
+                <div class="hero-content">
+                    <span id="place-category" class="category-pill">✦ Discover Braj</span>
+                    <p class="eyebrow">A JOURNEY THROUGH BRAJ</p>
+                    <h1 id="place-name">Discover a beautiful destination</h1>
+                    <p id="hero-location" class="hero-location">📍 Mathura, Uttar Pradesh</p>
+                </div>
 
-    <div id="placeDetails">
+                <div class="hero-caption">CULTURE · FAITH · HERITAGE</div>
+            </section>
 
-        <p>
-            Loading...
-        </p>
+            <section class="intro-section">
+                <div class="intro-copy">
+                    <h2>Every place has<br>a <span>story to tell.</span></h2>
+                </div>
 
-    </div>
+                <p id="place-description" class="intro-description"></p>
+            </section>
 
-</section>
+            <section class="information-grid">
+                <div class="info-card history-card">
+                    <div class="card-icon">📜</div>
+                    <p class="card-kicker">THE STORY</p>
+                    <h3>History &amp; Heritage</h3>
+                    <p id="place-history"></p>
+                    <div class="card-decoration">✦</div>
+                </div>
 
+                <div class="info-card">
+                    <div class="card-icon">📍</div>
+                    <p class="card-kicker">FIND YOUR WAY</p>
+                    <h3>Location</h3>
+                    <p id="place-location"></p>
+                    <div class="card-decoration">☀️✦✦</div>
+                    <span class="min">✦✦ Uttar Pradesh, India</span>
+                </div>
 
-<script src="js/details.js"></script>
+                <div class="info-card">
+                    <div class="card-icon">☀️</div>
+                    <p class="card-kicker">PLAN YOUR VISIT</p>
+                    <h3>Best Time to Visit</h3>
+                    <p id="place-best-time"></p>
+                </div>
 
+                <div class="info-card">
+                    <div class="card-icon">🕰️</div>
+                    <p class="card-kicker">BEFORE YOU GO</p>
+                    <h3>Timings</h3>
+                    <p id="place-timings"></p>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <a href="index.html" class="footer-brand">🌸 Mathura Paradise</a>
+        <p>Discover the timeless beauty of Mathura &amp; Vrindavan.</p>
+        <span>© 2026 Mathura Paradise</span>
+    </footer>
+
+    <script src="js/details.js"></script>
 </body>
-
 </html>

@@ -1,259 +1,90 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore famous temples, heritage sites, and beautiful nature destinations in Mathura and Vrindavan.">
     <title>Places to Visit | Mathura Paradise</title>
-
-    <link rel="stylesheet"
-          href="css/places.css">
-
+    <link rel="stylesheet" href="css/places.css">
 </head>
-
-
 <body>
 
+    <header class="navbar">
+        <div class="logo">🌸 Mathura Paradise</div>
 
-<!-- ================= NAVBAR ================= -->
-
-<header class="navbar">
-
-    <div class="logo">
-        🌸 Mathura Paradise
-    </div>
-
-    <nav>
-
-        <a href="index.html">
-            Home
-        </a>
-
-        <a href="index.html#about">
-            About
-        </a>
-
-        <a href="index.html#history">
-            History
-        </a>
-
-        <a href="places.html" class="active">
-            Places
-        </a>
-
-        <a href="contact.html">
-            Contact
-        </a>
-
-        <a href="feedback.html">
-            Feedback
-        </a>
-
-    </nav>
-
-</header>
-
-
-    <!-- ================= PAGE HERO ================= -->
-
-    <!-- <section class="places-hero">
-
-        <div class="hero-overlay"></div>
-
-
-        <div class="hero-content">
-
-            <p class="hero-label">
-                EXPLORE BRAJ
-            </p>
-
-            <h1>
-                Discover the Magic of Mathura
-            </h1>
-
-            <p>
-                Explore sacred temples, historic landmarks,
-                peaceful ghats and beautiful destinations
-                across Mathura and Vrindavan.
-            </p>
-
-        </div>
-
-    </section> -->
-
-
-
-    <!-- ================= MAIN CONTENT ================= -->
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#history">History</a>
+            <a href="places.html" class="active">Places</a>
+            <a href="contact.html">Contact</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+    </header>
 
     <main class="places-section">
 
-
-        <!-- SECTION HEADING -->
-
         <div class="section-heading">
-
-            <p class="section-label">
-                TOP DESTINATIONS
-            </p>
-
-            <h2>
-                Popular Places to Visit
-            </h2>
-
+            <p class="section-label">TOP DESTINATIONS</p>
+            <h2>Popular Places to Visit</h2>
             <p>
                 Discover the most beautiful and meaningful places
                 across the spiritual heart of Braj.
             </p>
-
         </div>
-
-
-
-        <!-- ================= SEARCH ================= -->
 
         <div class="search-container">
-
             <div class="search-box">
-
-                <span>
-                    🔍
-                </span>
-
+                <span aria-hidden="true">🔍</span>
                 <input
-                    type="text"
+                    type="search"
                     id="search"
                     placeholder="Search temples, heritage sites, nature places..."
+                    aria-label="Search places"
                 >
-
             </div>
-
         </div>
-
-
-
-        <!-- ================= FILTERS ================= -->
 
         <div class="filter-container">
-
-            <button
-                class="filter-btn active"
-                data-category="All">
-
-                <span>✨</span>
-                All
-
+            <button type="button" class="filter-btn active" data-category="All">
+                <span aria-hidden="true">✨</span> All
             </button>
 
-
-            <button
-                class="filter-btn"
-                data-category="Temple">
-
-                <span>🛕</span>
-                Temples
-
+            <button type="button" class="filter-btn" data-category="Temple">
+                <span aria-hidden="true">🛕</span> Temples
             </button>
 
-
-            <button
-                class="filter-btn"
-                data-category="Heritage">
-
-                <span>🏛️</span>
-                Heritage
-
+            <button type="button" class="filter-btn" data-category="Heritage">
+                <span aria-hidden="true">🏛️</span> Heritage
             </button>
 
-
-            <button
-                class="filter-btn"
-                data-category="Nature">
-
-                <span>🌿</span>
-                Nature
-
+            <button type="button" class="filter-btn" data-category="Nature">
+                <span aria-hidden="true">🌿</span> Nature
             </button>
-
         </div>
-
-
-
-        <!-- ================= PLACES COUNT ================= -->
 
         <div class="result-heading">
-
-            <p id="resultCount">
-                Discovering places...
-            </p>
-
+            <p id="resultCount" aria-live="polite">Discovering places...</p>
         </div>
 
+        <div id="placesContainer" class="places-grid"></div>
 
-
-        <!-- ================= PLACES GRID ================= -->
-
-        <div
-            id="placesContainer"
-            class="places-grid">
-
-            <!-- Cards will be loaded by JavaScript -->
-
-        </div>
-
-
-
-        <!-- ================= LOADING ================= -->
-
-        <div
-            id="loading"
-            class="loading">
-
+        <div id="loading" class="loading" role="status">
             <div class="loader"></div>
-
-            <p>
-                Discovering beautiful places...
-            </p>
-
+            <p>Discovering beautiful places...</p>
         </div>
 
-
-
-        <!-- ================= NO RESULTS ================= -->
-
-        <div
-            id="noResults"
-            class="no-results">
-
-            <div class="no-results-icon">
-                🔎
-            </div>
-
-            <h3>
-                No Places Found
-            </h3>
-
-            <p>
-                Try another search or select a different category.
-            </p>
-
+        <div id="noResults" class="no-results" hidden>
+            <div class="no-results-icon" aria-hidden="true">🔎</div>
+            <h3>No Places Found</h3>
+            <p>Try another search or select a different category.</p>
         </div>
-
 
     </main>
 
-
-
-    <!-- ================= FOOTER ================= -->
-
     <footer class="footer">
-
-        <div class="footer-logo">
-            🌸 Mathura Paradise
-        </div>
+        <div class="footer-logo">🌸 Mathura Paradise</div>
 
         <p>
             Discover the spiritual, historical and natural beauty
@@ -265,15 +96,8 @@
         <p class="copyright">
             © 2026 Mathura Paradise. All Rights Reserved.
         </p>
-
     </footer>
 
-
-
-    <!-- ================= JAVASCRIPT ================= -->
-
     <script src="js/places.js"></script>
-
 </body>
-
 </html>

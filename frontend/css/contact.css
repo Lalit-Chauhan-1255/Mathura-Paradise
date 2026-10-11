@@ -1,7 +1,5 @@
-/* =====================================================
-   RESET
-===================================================== */
 
+/* RESET */
 * {
     margin: 0;
     padding: 0;
@@ -24,27 +22,18 @@ a {
     color: inherit;
 }
 
-
-/* =====================================================
-   NAVBAR
-===================================================== */
-
+/* NAVBAR */
 .navbar {
     min-height: 75px;
     padding: 0 6%;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     background: rgba(255, 250, 245, 0.98);
-
     position: sticky;
     top: 0;
     z-index: 1000;
-
-    box-shadow:
-        0 3px 20px rgba(70, 35, 10, 0.08);
+    box-shadow: 0 3px 20px rgba(70, 35, 10, 0.08);
 }
 
 .logo {
@@ -61,15 +50,11 @@ a {
 
 .navbar nav a {
     position: relative;
-
+    padding: 8px 0;
     font-size: 15px;
     font-weight: 600;
-
     color: #59351f;
-
-    padding: 8px 0;
-
-    transition: 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 .navbar nav a:hover,
@@ -79,18 +64,13 @@ a {
 
 .navbar nav a::after {
     content: "";
-
     position: absolute;
-
     left: 0;
     bottom: 0;
-
     width: 0;
     height: 2px;
-
     background: #b35414;
-
-    transition: 0.3s ease;
+    transition: width 0.3s ease;
 }
 
 .navbar nav a:hover::after,
@@ -98,25 +78,15 @@ a {
     width: 100%;
 }
 
-
-/* =====================================================
-   HERO
-===================================================== */
-
+/* CONTACT HERO */
 .contact-hero {
     min-height: 430px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     text-align: center;
-
     position: relative;
-
-    background-image:
-        url("../images/hero/radha-krishna.png");
-
+    background-image: url("../images/hero/radha-krishna.png");
     background-size: cover;
     background-position: center;
 }
@@ -124,241 +94,144 @@ a {
 .hero-overlay {
     position: absolute;
     inset: 0;
-
-    background:
-        linear-gradient(
-            rgba(45, 17, 5, 0.58),
-            rgba(45, 17, 5, 0.70)
-        );
+    background: linear-gradient(
+        rgba(45, 17, 5, 0.58),
+        rgba(45, 17, 5, 0.70)
+    );
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
-
     max-width: 900px;
-
     padding: 30px;
 }
 
 .hero-content p {
     color: #f4d1b1;
-
     font-size: 15px;
     font-weight: 700;
-
     letter-spacing: 6px;
-
     margin-bottom: 20px;
 }
 
 .hero-content h1 {
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size:
-        clamp(42px, 6vw, 70px);
-
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(42px, 6vw, 70px);
     line-height: 1.1;
-
     color: white;
-
     margin-bottom: 22px;
 }
 
 .hero-content span {
     display: block;
-
     max-width: 700px;
-
     margin: auto;
-
     color: #fff2e4;
-
     font-size: 18px;
 }
 
-
-/* =====================================================
-   CONTACT SECTION
-===================================================== */
-
+/* CONTACT SECTION */
 .contact-section {
     padding: 100px 7% 120px;
 }
 
 .contact-heading {
-    text-align: center;
-
     max-width: 850px;
-
+    text-align: center;
     margin: 0 auto 60px;
 }
 
 .section-label {
     font-size: 15px;
-
     letter-spacing: 5px;
-
     font-weight: 700;
-
     color: #815033;
-
     margin-bottom: 15px;
 }
 
 .contact-heading h2 {
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size:
-        clamp(38px, 5vw, 58px);
-
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(38px, 5vw, 58px);
     line-height: 1.15;
-
     color: #6d2f05;
-
     margin-bottom: 20px;
 }
 
 .contact-heading > p:last-child {
     color: #725b4b;
-
     font-size: 17px;
 }
 
-
-/* =====================================================
-   CONTACT CONTAINER
-===================================================== */
-
+/* CONTACT LAYOUT */
 .contact-container {
     max-width: 1150px;
-
     margin: auto;
-
     display: grid;
-
-    grid-template-columns:
-        0.85fr 1.15fr;
-
+    grid-template-columns: 0.85fr 1.15fr;
     gap: 50px;
-
     align-items: stretch;
 }
 
-
-/* =====================================================
-   CONTACT INFORMATION
-===================================================== */
-
+/* CONTACT INFORMATION */
 .contact-info {
     padding: 45px;
-
     border-radius: 22px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #6d2f05,
-            #9a470e
-        );
-
+    background: linear-gradient(145deg, #6d2f05, #9a470e);
     color: white;
-
-    box-shadow:
-        0 20px 50px rgba(84, 44, 18, 0.15);
+    box-shadow: 0 20px 50px rgba(84, 44, 18, 0.15);
 }
 
 .contact-info h3 {
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
+    font-family: Georgia, "Times New Roman", serif;
     font-size: 32px;
-
     margin-bottom: 18px;
 }
 
 .contact-info > p {
     color: #f5dfce;
-
     margin-bottom: 35px;
-
     font-size: 15px;
 }
 
-
-/* =====================================================
-   INFO ITEM
-===================================================== */
-
 .info-item {
     display: flex;
-
     align-items: flex-start;
-
     gap: 17px;
-
     padding: 20px 0;
-
-    border-top:
-        1px solid rgba(255, 255, 255, 0.16);
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .info-icon {
     width: 48px;
     height: 48px;
-
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
-    background:
-        rgba(255, 255, 255, 0.12);
-
+    background: rgba(255, 255, 255, 0.12);
     font-size: 22px;
 }
 
 .info-item h4 {
     color: white;
-
     font-size: 17px;
-
     margin-bottom: 3px;
 }
 
 .info-item p {
     color: #ead4c3;
-
     font-size: 14px;
 }
 
-
-/* =====================================================
-   FORM BOX
-===================================================== */
-
+/* CONTACT FORM */
 .contact-form-box {
     padding: 42px;
-
     background: white;
-
     border: 1px solid #eadbd0;
-
     border-radius: 22px;
-
-    box-shadow:
-        0 15px 45px rgba(84, 44, 18, 0.08);
+    box-shadow: 0 15px 45px rgba(84, 44, 18, 0.08);
 }
 
 .form-group {
@@ -367,13 +240,9 @@ a {
 
 .form-group label {
     display: block;
-
     font-size: 14px;
-
     font-weight: 700;
-
     color: #59351f;
-
     margin-bottom: 8px;
 }
 
@@ -381,22 +250,14 @@ a {
 .form-group textarea,
 .form-group select {
     width: 100%;
-
-    border: 1px solid #e4d2c4;
-
-    border-radius: 10px;
-
     padding: 13px 15px;
-
+    border: 1px solid #e4d2c4;
+    border-radius: 10px;
     outline: none;
-
     background: #fffdfb;
-
     color: #4b2e20;
-
     font-size: 15px;
-
-    transition: 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group textarea {
@@ -407,59 +268,34 @@ a {
 .form-group textarea:focus,
 .form-group select:focus {
     border-color: #b35414;
-
-    box-shadow:
-        0 0 0 3px rgba(179, 84, 20, 0.08);
+    box-shadow: 0 0 0 3px rgba(179, 84, 20, 0.08);
 }
 
-
-/* =====================================================
-   FORM BUTTON
-===================================================== */
-
+/* SUBMIT BUTTON */
 .contact-form-box button {
     width: 100%;
-
-    border: none;
-
-    border-radius: 50px;
-
     padding: 15px 25px;
-
+    border: none;
+    border-radius: 50px;
     background: #8c3f0b;
-
     color: white;
-
     font-size: 15px;
-
     font-weight: 700;
-
     cursor: pointer;
-
-    transition: 0.3s ease;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .contact-form-box button:hover {
     background: #b35414;
-
     transform: translateY(-2px);
-
-    box-shadow:
-        0 10px 25px rgba(140, 63, 11, 0.20);
+    box-shadow: 0 10px 25px rgba(140, 63, 11, 0.20);
 }
 
-
-/* =====================================================
-   FORM MESSAGE
-===================================================== */
-
+/* FORM STATUS MESSAGE */
 .form-message {
     text-align: center;
-
     margin-top: 15px;
-
     font-size: 14px;
-
     font-weight: 600;
 }
 
@@ -467,87 +303,59 @@ a {
     color: #26834a;
 }
 
-
-/* =====================================================
-   FOOTER
-===================================================== */
-
+/* FOOTER */
 .footer {
-    background: #291208;
-
-    color: #d9c5b7;
-
-    text-align: center;
-
     padding: 55px 7% 30px;
+    background: #291208;
+    color: #d9c5b7;
+    text-align: center;
 }
 
 .footer-logo {
     color: white;
-
     font-size: 25px;
-
     font-weight: 700;
-
     margin-bottom: 15px;
 }
 
 .footer > p {
     max-width: 650px;
-
     margin: auto;
-
     font-size: 14px;
 }
 
 .footer-line {
     width: 80px;
-
     height: 1px;
-
     background: #9a6745;
-
     margin: 30px auto;
 }
 
 .footer .copyright {
     font-size: 12px;
-
     color: #a99385;
 }
 
-
-/* =====================================================
-   RESPONSIVE
-===================================================== */
-
+/* RESPONSIVE DESIGN */
 @media (max-width: 950px) {
-
     .navbar {
         padding: 18px 5%;
-
         flex-direction: column;
-
         gap: 15px;
     }
 
     .navbar nav {
         flex-wrap: wrap;
-
         justify-content: center;
-
         gap: 12px 22px;
     }
 
     .contact-container {
         grid-template-columns: 1fr;
     }
-
 }
 
-
 @media (max-width: 600px) {
-
     .contact-section {
         padding: 70px 5% 90px;
     }
@@ -561,8 +369,15 @@ a {
         font-size: 40px;
     }
 
+    .hero-content p {
+        letter-spacing: 3px;
+    }
+
     .hero-content span {
         font-size: 16px;
     }
 
+    .contact-heading h2 {
+        font-size: 36px;
+    }
 }

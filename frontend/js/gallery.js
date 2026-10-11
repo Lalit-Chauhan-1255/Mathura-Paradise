@@ -1,314 +1,136 @@
-const galleryItems =
-    document.querySelectorAll(".gallery-item");
 
-const filterButtons =
-    document.querySelectorAll(".gallery-filter");
+const galleryItems = document.querySelectorAll(".gallery-item");
+const filterButtons = document.querySelectorAll(".gallery-filter");
 
-const lightbox =
-    document.getElementById("lightbox");
-
-const lightboxImage =
-    document.getElementById("lightboxImage");
-
-const lightboxCaption =
-    document.getElementById("lightboxCaption");
-
-const closeLightbox =
-    document.getElementById("closeLightbox");
-
-const previousButton =
-    document.getElementById("prevImage");
-
-const nextButton =
-    document.getElementById("nextImage");
-
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const lightboxCaption = document.getElementById("lightboxCaption");
+const closeLightbox = document.getElementById("closeLightbox");
+const previousButton = document.getElementById("prevImage");
+const nextButton = document.getElementById("nextImage");
 
 let visibleImages = [];
-
 let currentImage = 0;
 
-
-/* =====================================================
-   UPDATE VISIBLE IMAGES
-===================================================== */
-
 function updateVisibleImages() {
-
-    visibleImages =
-        Array.from(
-            document.querySelectorAll(
-                ".gallery-item:not([style*='display: none'])"
-            )
-        );
-
+    visibleImages = Array.from(galleryItems).filter(
+        item => item.style.display !== "none"
+    );
 }
 
-
-/* =====================================================
-   FILTER GALLERY
-===================================================== */
-
 filterButtons.forEach(button => {
+    button.addEventListener("click", function () {
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        this.classList.add("active");
 
-    button.addEventListener(
-        "click",
-        function () {
+        const filter = this.dataset.filter;
 
-            filterButtons.forEach(btn => {
+        galleryItems.forEach(item => {
+            item.style.display =
+                filter === "all" || item.classList.contains(filter)
+                    ? "block"
+                    : "none";
+        });
 
-                btn.classList.remove("active");
-
-            });
-
-
-            this.classList.add("active");
-
-
-            const filter =
-                this.dataset.filter;
-
-
-            galleryItems.forEach(item => {
-
-                if (
-                    filter === "all" ||
-                    item.classList.contains(filter)
-                ) {
-
-                    item.style.display =
-                        "block";
-
-                } else {
-
-                    item.style.display =
-                        "none";
-
-                }
-
-            });
-
-
-            updateVisibleImages();
-
-        }
-    );
-
+        updateVisibleImages();
+    });
 });
-
-
-/* =====================================================
-   OPEN LIGHTBOX
-===================================================== */
 
 galleryItems.forEach(item => {
+    item.addEventListener("click", function () {
+        updateVisibleImages();
+        currentImage = visibleImages.indexOf(this);
 
-    item.addEventListener(
-        "click",
-        function () {
-
-            updateVisibleImages();
-
-
-            currentImage =
-                visibleImages.indexOf(this);
-
-
+        if (currentImage !== -1) {
             showImage();
-
         }
-    );
-
+    });
 });
 
-
-/* =====================================================
-   SHOW IMAGE
-===================================================== */
-
 function showImage() {
-
     if (
         currentImage < 0 ||
         currentImage >= visibleImages.length
     ) {
-
         return;
-
     }
 
+    const item = visibleImages[currentImage];
+    const image = item.querySelector("img");
+    const title = item.querySelector("h3");
 
-    const item =
-        visibleImages[currentImage];
+    if (!image || !lightbox || !lightboxImage || !lightboxCaption) {
+        return;
+    }
 
-
-    const image =
-        item.querySelector("img");
-
-
-    const title =
-        item.querySelector("h3");
-
-
-    lightboxImage.src =
-        image.src;
-
-
-    lightboxImage.alt =
-        image.alt;
-
-
-    lightboxCaption.textContent =
-        title
-            ? title.textContent
-            : image.alt;
-
+    lightboxImage.src = image.src;
+    lightboxImage.alt = image.alt;
+    lightboxCaption.textContent = title
+        ? title.textContent
+        : image.alt;
 
     lightbox.classList.add("show");
-
-
-    document.body.style.overflow =
-        "hidden";
-
+    document.body.style.overflow = "hidden";
 }
-
-
-/* =====================================================
-   CLOSE LIGHTBOX
-===================================================== */
 
 function closeGallery() {
+    if (!lightbox) {
+        return;
+    }
 
-    lightbox.classList.remove(
-        "show"
-    );
-
-    document.body.style.overflow =
-        "";
-
+    lightbox.classList.remove("show");
+    document.body.style.overflow = "";
 }
 
+if (closeLightbox) {
+    closeLightbox.addEventListener("click", closeGallery);
+}
 
-closeLightbox.addEventListener(
-    "click",
-    closeGallery
-);
-
-
-/* =====================================================
-   NEXT IMAGE
-===================================================== */
-
-nextButton.addEventListener(
-    "click",
-    function (event) {
-
+if (nextButton) {
+    nextButton.addEventListener("click", function (event) {
         event.stopPropagation();
 
-        currentImage++;
+        if (visibleImages.length === 0) return;
 
-        if (
-            currentImage >=
-            visibleImages.length
-        ) {
-
-            currentImage = 0;
-
-        }
-
+        currentImage = (currentImage + 1) % visibleImages.length;
         showImage();
+    });
+}
 
-    }
-);
-
-
-/* =====================================================
-   PREVIOUS IMAGE
-===================================================== */
-
-previousButton.addEventListener(
-    "click",
-    function (event) {
-
+if (previousButton) {
+    previousButton.addEventListener("click", function (event) {
         event.stopPropagation();
 
-        currentImage--;
+        if (visibleImages.length === 0) return;
 
-        if (currentImage < 0) {
-
-            currentImage =
-                visibleImages.length - 1;
-
-        }
+        currentImage =
+            (currentImage - 1 + visibleImages.length) %
+            visibleImages.length;
 
         showImage();
+    });
+}
 
-    }
-);
-
-
-/* =====================================================
-   CLOSE BY CLICKING BACKGROUND
-===================================================== */
-
-lightbox.addEventListener(
-    "click",
-    function (event) {
-
-        if (
-            event.target === lightbox
-        ) {
-
+if (lightbox) {
+    lightbox.addEventListener("click", function (event) {
+        if (event.target === lightbox) {
             closeGallery();
-
         }
+    });
+}
 
+document.addEventListener("keydown", function (event) {
+    if (!lightbox || !lightbox.classList.contains("show")) {
+        return;
     }
-);
 
-
-/* =====================================================
-   KEYBOARD CONTROLS
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function (event) {
-
-        if (
-            !lightbox.classList.contains(
-                "show"
-            )
-        ) {
-
-            return;
-
-        }
-
-
-        if (event.key === "Escape") {
-
-            closeGallery();
-
-        }
-
-
-        if (event.key === "ArrowRight") {
-
-            nextButton.click();
-
-        }
-
-
-        if (event.key === "ArrowLeft") {
-
-            previousButton.click();
-
-        }
-
+    if (event.key === "Escape") {
+        closeGallery();
+    } else if (event.key === "ArrowRight" && nextButton) {
+        nextButton.click();
+    } else if (event.key === "ArrowLeft" && previousButton) {
+        previousButton.click();
     }
-);
-
-
-/* INITIALIZE */
+});
 
 updateVisibleImages();
